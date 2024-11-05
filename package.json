@@ -1,0 +1,59 @@
+{
+    "name": "retrace-debug-extension",
+    "displayName": "Retrace Debug Extension",
+    "description": "A VSCode extension for dynamic arguments for Retrace Replay",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "activationEvents": [
+        "onCommand:extension.getDynamicEnv",
+        "onLanguage:python",
+        "onCommand:retrace.pickDirectory"
+    ],
+
+    "main": "./src/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "retrace.pickDirectory",
+                "title": "Pick a Directory"
+            },
+            {
+                "command": "extension.getDynamicEnv",
+                "title": "Get Dynamic Env for Retrace"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Retrace Settings",
+                "properties": {
+                    "retrace.directoryPath": {
+                        "type": "string",
+                        "default": "default value",
+                        "description": "A description of what this setting does. [Pick a directory](\"${command:retrace.pickDirectory}\")",
+                        "scope": "window"
+                    }
+                }
+        },
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "retrace_customView",
+                    "title": "Newton Extension",
+                    "icon": "resources/Icon.svg"
+                }]
+        },
+        "views": {
+            "retrace_customView": [{
+                "id": "retrace_customView",
+                "name": "Newtom My View"
+            }]
+        },
+        "webviews": [
+            {"id": "retrace.webview",
+             "title": "entitled",
+            "entryPoint": "./extensions/retrace.html"}
+        ]
+    }
+}

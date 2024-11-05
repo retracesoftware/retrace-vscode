@@ -1,0 +1,1 @@
+to build run: vsce package
