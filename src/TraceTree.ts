@@ -173,21 +173,8 @@ export class TraceExplorerProvider implements vscode.TreeDataProvider<TraceFileI
         retraceConfig["cwd"] = cwd;
         retraceConfig["env"] = this.buildEnv(env);
         retraceConfig["program"] = programArgs[1];
-        retraceConfig["args"] = [];
+        retraceConfig["args"] = programArgs.slice(2);
         retraceConfig["python"] = exe;
-
-        // const newConfiguration = {
-        //     "name": "Retrace - replay1",
-        //     "type": "debugpy",
-        //     "request": "launch",
-        //     "stopOnEntry": true,
-        //     "justMyCode": false,
-        //     "cwd": cwd,
-        //     "env": env,
-        //     "program": programArgs[1],
-        //     "args": "",
-        //     "python": exe,
-        // };
 
         // launch the debug session
         const reason = await vscode.debug.startDebugging(workspaceFolders[0], retraceConfig);
@@ -218,7 +205,6 @@ export class TraceExplorerProvider implements vscode.TreeDataProvider<TraceFileI
         const json: string[] = JSON.parse(text);
 
         console.log(json);
-
         return json;
     }
 
@@ -230,7 +216,6 @@ export class TraceExplorerProvider implements vscode.TreeDataProvider<TraceFileI
             }
     
             const data = await fs.promises.readFile(file, {encoding: 'utf8'});
-            console.log(data);
             return data;
         } catch (err) {
             console.error('Error reading file:', err);

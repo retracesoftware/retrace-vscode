@@ -164,7 +164,7 @@ var TraceExplorerProvider = class {
     retraceConfig["cwd"] = cwd;
     retraceConfig["env"] = this.buildEnv(env);
     retraceConfig["program"] = programArgs[1];
-    retraceConfig["args"] = [];
+    retraceConfig["args"] = programArgs.slice(2);
     retraceConfig["python"] = exe;
     const reason = await vscode.debug.startDebugging(workspaceFolders[0], retraceConfig);
     if (reason) {
@@ -197,7 +197,6 @@ var TraceExplorerProvider = class {
         throw new Error(`process ${name} file is missing: ${file}`);
       }
       const data = await fs.promises.readFile(file, { encoding: "utf8" });
-      console.log(data);
       return data;
     } catch (err) {
       console.error("Error reading file:", err);
