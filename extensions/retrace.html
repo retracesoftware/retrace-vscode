@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive View</title>
+    <title>Retrace Debug Launcher</title>
     <style>
         button {
             padding: 10px;
@@ -12,13 +12,31 @@
     </style>
 </head>
 <body>
-    <h1>Interactive View</h1>
-    <button id="myButton">Click Me</button>
+    <h1>Retrace debug folder</h1>
+    <p id="trace.folder.display"></p>    
+    <button id="retrace.choose.folder" onclick="chooseFolder()">Choose Trace Folder</button>
+    <p>You can now launch a debugging session using the trace folder selected above</p>
+    <button id="retrace.launch.debug" onclick="launchTraceDebug()">Launch Retrace Debug</button>
     <script>
         const vscode = acquireVsCodeApi();
-        document.getElementById('myButton').addEventListener('click', () => {
-            vscode.postMessage({ command: 'buttonClicked' });
+        function chooseFolder() {
+            vscode.postMessage({ command: 'retrace.choose.folder' });
+        }
+
+        function launchTraceDebug() {
+            vscode.postMessage({ command: 'retrace.launch.debug' });
+        }
+
+        window.addEventListener('message', event => {
+            if (event.data.command === 'displayFolder') {
+                document.getElementById('trace.folder.display').textContent = event.data.fileName;
+            }
         });
+
+        // document.getElementById('retrace.debug.launcher').addEventListener('click', () => {
+        //     vscode.postMessage({ command: 'retrace.choose.folder' });
+        // });
+
     </script>
 </body>
 </html>
