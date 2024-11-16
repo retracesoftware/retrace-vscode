@@ -59,6 +59,15 @@ var TraceExplorerProvider = class {
   _onDidChangeTreeData = new vscode.EventEmitter();
   onDidChangeTreeData = this._onDidChangeTreeData.event;
   _traceRoot = "";
+  async setNewTraceFolder() {
+    const nf = await this.chooseFolder("Select trace folder name");
+    if (nf !== "") {
+      this._traceRoot = nf;
+      this.setTraceFolder(this._traceRoot);
+      this.refresh();
+      vscode.window.showInformationMessage(`new trace folder selected: (${nf})`);
+    }
+  }
   // chooseFolder allows user to select a folder path
   async chooseFolder(label) {
     const folders = await vscode.window.showOpenDialog({
@@ -262,6 +271,8 @@ function activate(context) {
   window3.showInformationMessage("Activating retrace debug launcher!!!!!");
   const provider = new TraceExplorerProvider(context.extensionUri);
   context.subscriptions.push(vscode2.window.registerTreeDataProvider("retrace.configurationView", provider));
+  vscode2.commands.registerCommand("retrace.configurationView.refreshEntry", () => provider.refresh());
+  vscode2.commands.registerCommand("retrace.configurationView.newTrace", () => provider.setNewTraceFolder());
   context.subscriptions.push(vscode2.commands.registerCommand("retrace.configurationView.editEntry", (node) => {
     vscode2.window.showInformationMessage(`Successfully called edit entry on ${node.label}.`);
     provider.editConfig(node);

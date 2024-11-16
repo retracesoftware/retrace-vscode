@@ -5,6 +5,9 @@
     "version": "0.0.1",
     "publisher": "Retrace Software",
     "license": "MIT",
+    "author": {
+        "name": "Newton Aird"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/retracesoftware/retrace-vscode.git"
@@ -44,6 +47,18 @@
             ]
         },
         "commands": [
+			{
+				"command": "retrace.configurationView.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "retrace.configurationView.newTrace",
+				"title": "New Trace Folder"
+			},
             {
                 "command": "retrace.configurationView.editEntry",
                 "title": "Edit",
@@ -54,6 +69,17 @@
             }
         ],
         "menus": {
+			"view/title": [
+				{
+					"command": "retrace.configurationView.refreshEntry",
+					"when": "view == retrace.configurationView",
+					"group": "navigation"
+				},
+				{
+					"command": "retrace.configurationView.newTrace",
+					"when": "view == retrace.configurationView"
+				}
+            ],
 			"view/item/context": [
 				{
 					"command": "retrace.configurationView.editEntry",

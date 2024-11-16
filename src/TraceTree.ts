@@ -35,6 +35,16 @@ export class TraceExplorerProvider implements vscode.TreeDataProvider<TraceFileI
         })();
 	}
 
+    async setNewTraceFolder() {
+        const nf = await this.chooseFolder('Select trace folder name');
+        if (nf !== '') {
+            this._traceRoot = nf;
+            this.setTraceFolder(this._traceRoot);
+            this.refresh();
+            vscode.window.showInformationMessage(`new trace folder selected: (${nf})`);
+        }
+    }
+
     // chooseFolder allows user to select a folder path
     private async chooseFolder(label: string): Promise<string> {
         const folders = await vscode.window.showOpenDialog({
