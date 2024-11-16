@@ -1,5 +1,0 @@
-    "activationEvents": [
-        "onCommand:extension.getDynamicEnv",
-        "onCommand:retrace.pickDirectory"
-    ]
-    
